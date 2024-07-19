@@ -2,8 +2,6 @@ extends CharacterBody2D
 
 class_name Player
 
-@onready var spell: PackedScene = preload("res://Scenes/Spell.tscn")
-
 @export_group("Base Stats")
 @export var maxHealth = 1000
 @export var moveSpeed:float = 300.0
@@ -11,6 +9,7 @@ var health = maxHealth
 
 var currentSpeed = 0
 var lastPos = Vector2.ZERO
+var activeSpell:Spell
 
 @export_group("Other")
 
@@ -19,8 +18,9 @@ enum Shape {SQUARE, CIRCLE}
 enum Damage {FIRE, WATER}
 
 func _ready():
-	var testspell := spell.instantiate()
-	add_child(testspell)
+	activeSpell = Spell.new("TestSpell", 100,SPELL_ATTRIBUTES.DAMAGE_TYPE.FIRE, 
+	SPELL_ATTRIBUTES.SHAPE_TYPE.CIRCLE, 20,SPELL_ATTRIBUTES.SHAPE_ACTIVATION.INSTANT)
+	add_child(activeSpell)
 
 		
 func die():
@@ -28,6 +28,7 @@ func die():
 
 
 func _physics_process(delta):
+	activeSpell.position = get_global_mouse_position() - self.position
 	#Get direction
 	var direction = Vector2(
 		Input.get_axis("move_left", "move_right"),

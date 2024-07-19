@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/spell.gd" id="1_6c70y"]
 [ext_resource type="Texture2D" uid="uid://bba2e8fvb80sp" path="res://icon.svg" id="1_tpxup"]
 
-[node name="Spell" type="Marker2D"]
+[node name="Spell" type="Area2D"]
 script = ExtResource("1_6c70y")
 
 [node name="Image" type="Sprite2D" parent="."]
