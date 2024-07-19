@@ -3,17 +3,20 @@ extends Node
 class_name Shape
 
 var parent:Node2D
-var radius:int
+var size:int
 
-func _init(s_parent, s_radius):
+func _init(s_parent, s_size):
 	parent = s_parent
-	radius = s_radius
-	print("Radius ",radius)
-	CreateCollider()
+	size = s_size
+	Start()
 	
-func CreateCollider():
+func Start():
 	pass
 	
 func OnUse():
 	pass
+	
+func CreateCollider():
+	pass
+	
 	

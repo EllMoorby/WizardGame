@@ -38,6 +38,8 @@ func _physics_process(delta):
 	#If not moving in x
 	
 			
+	
+	
 	if direction == Vector2.ZERO:
 		velocity = Vector2.ZERO
 	else:
