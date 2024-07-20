@@ -1,9 +1,8 @@
 extends Shape
 
-class_name Bolt
+class_name BoltSpell
 
-@onready var projectile = preload("res://Scenes/Bolt.tscn")
 
-func Use():
-	var activeProjectile = projectile.new()
-	parent.add_child(activeProjectile)
+
+func onUse():
+	parent.get_node("../ProjectileContainer").add_child(BoltProjectile.fire(parent.global_position, parent.target))

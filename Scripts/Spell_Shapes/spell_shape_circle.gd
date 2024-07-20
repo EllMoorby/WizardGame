@@ -1,6 +1,6 @@
 extends Shape
 
-class_name Circle
+class_name CircleSpell
 
 var collisionShape:CollisionShape2D
 
@@ -12,8 +12,11 @@ func CreateCollider():
 	parent.add_child(collisionShape)
 	collisionShape.shape = CircleShape2D.new()
 	collisionShape.shape.set_radius(size)
+	collisionShape.set_deferred("disabled",true)
 	
-func Use():
-	#Deal Damage
-	pass
+func onUse():
+	collisionShape.set_deferred("disabled",false)
+	collisionShape.global_position = parent.get_global_mouse_position()
+	#Check for enemies
+	collisionShape.set_deferred("disabled",true)
 	

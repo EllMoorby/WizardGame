@@ -13,7 +13,7 @@ func _init(s_parent, s_size):
 func Start():
 	pass
 	
-func OnUse():
+func onUse():
 	pass
 	
 func CreateCollider():

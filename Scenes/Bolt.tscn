@@ -1,16 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://cqlssgt6togw3"]
 
-[ext_resource type="Script" path="res://Scenes/Bolt.gd" id="1_d4hgm"]
+[ext_resource type="Script" path="res://Scripts/Bolt.gd" id="1_vorod"]
 [ext_resource type="Texture2D" uid="uid://bba2e8fvb80sp" path="res://icon.svg" id="1_ykp0d"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o56l8"]
 
 [node name="Bolt" type="Area2D"]
-script = ExtResource("1_d4hgm")
+script = ExtResource("1_vorod")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_o56l8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.171875, 0.171875)
 texture = ExtResource("1_ykp0d")

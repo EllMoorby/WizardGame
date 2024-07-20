@@ -1,6 +1,6 @@
 extends Shape
 
-class_name Square
+class_name SquareSpell
 	
 var collisionShape:CollisionShape2D
 
@@ -12,7 +12,12 @@ func CreateCollider():
 	parent.add_child(collisionShape)
 	collisionShape.shape = RectangleShape2D.new()
 	collisionShape.shape.set_size(Vector2 (size*2,size*2))
+	collisionShape.set_deferred("disabled",true)
 	
-func Use():
-	#Deal Damage
-	pass
+func onUse():
+	collisionShape.set_deferred("disabled",false)
+	collisionShape.global_position = parent.get_global_mouse_position()
+	#Check for enemies
+	collisionShape.set_deferred("disabled",true)
+	
+
