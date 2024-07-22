@@ -1,12 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://ceconnt515lkf"]
+[gd_scene load_steps=4 format=3 uid="uid://ceconnt515lkf"]
 
 [ext_resource type="PackedScene" uid="uid://d2acbii7gad4p" path="res://Scenes/Player.tscn" id="1_2ag36"]
+[ext_resource type="PackedScene" uid="uid://div1q0qxac6ye" path="res://Scenes/Enemy.tscn" id="2_3yil8"]
+[ext_resource type="PackedScene" uid="uid://x0yomcystu6o" path="res://Scenes/debug_ui.tscn" id="3_sgw7n"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_2ag36")]
-
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+zoom = Vector2(4, 4)
 
 [node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="Enemy" parent="." instance=ExtResource("2_3yil8")]
+position = Vector2(93, -30)
+
+[node name="DebugHUD" parent="." instance=ExtResource("3_sgw7n")]
+
+[node name="Player" parent="." instance=ExtResource("1_2ag36")]
+moveSpeed = 150.0
+
+[connection signal="health_update" from="Player" to="DebugHUD" method="_on_player_health_update"]

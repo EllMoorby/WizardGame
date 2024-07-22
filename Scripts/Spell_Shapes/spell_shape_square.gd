@@ -7,17 +7,21 @@ var collisionShape:CollisionShape2D
 func Start():
 	CreateCollider()
 	
+	
 func CreateCollider():
 	collisionShape = CollisionShape2D.new()
-	parent.add_child(collisionShape)
 	collisionShape.shape = RectangleShape2D.new()
 	collisionShape.shape.set_size(Vector2 (size*2,size*2))
-	collisionShape.set_deferred("disabled",true)
+	parent.add_child(collisionShape)
 	
 func onUse():
-	collisionShape.set_deferred("disabled",false)
-	collisionShape.global_position = parent.get_global_mouse_position()
-	#Check for enemies
-	collisionShape.set_deferred("disabled",true)
+	for area in parent.get_overlapping_areas():
+		if area.is_in_group("Enemy"):
+			onHit(area)
 	
+func onHit(body:Node2D):
+	body.takeDamage(parent.attributes.damage)
+	
+func setTarget(target:Vector2):
+	collisionShape.global_position = target
 

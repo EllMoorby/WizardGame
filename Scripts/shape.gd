@@ -16,7 +16,15 @@ func Start():
 func onUse():
 	pass
 	
+func onHit(body:Node2D):
+	pass
+	
+func _process(delta):
+	pass
+	
 func CreateCollider():
 	pass
 	
+func setTarget(target:Vector2):
+	pass
 	

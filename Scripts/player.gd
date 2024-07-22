@@ -1,5 +1,4 @@
 extends CharacterBody2D
-
 class_name Player
 
 @export_group("Base Stats")
@@ -7,23 +6,28 @@ class_name Player
 @export var moveSpeed:float = 300.0
 var health = maxHealth
 
-var currentSpeed = 0
-var lastPos = Vector2.ZERO
 var activeSpell:Spell
 
 @export_group("Other")
 
 const offset = 100.0
-enum Shape {SQUARE, CIRCLE}
-enum Damage {FIRE, WATER}
+
+signal health_update(health)
 
 func _ready():
-	activeSpell = Spell.createSpell("TestSpell", 100,SPELL_ATTRIBUTES.DAMAGE_TYPE.FIRE, 
-	SPELL_ATTRIBUTES.SHAPE_TYPE.BOLT, 20,SPELL_ATTRIBUTES.SHAPE_ACTIVATION.INSTANT,[[SPELL_ATTRIBUTES.MODIFIER_TYPE.DAMAGE,5],[SPELL_ATTRIBUTES.MODIFIER_TYPE.RADIUS,10]])
+	activeSpell = Spell.createSpell("TestSpell", 10,SPELL_ATTRIBUTES.DAMAGE_TYPE.FIRE, 
+	SPELL_ATTRIBUTES.SHAPE_TYPE.CIRCLE, 20,SPELL_ATTRIBUTES.SHAPE_ACTIVATION.INSTANT,[[SPELL_ATTRIBUTES.MODIFIER_TYPE.DAMAGE,5],[SPELL_ATTRIBUTES.MODIFIER_TYPE.RADIUS,10]],1)
 	add_child(activeSpell)
+	health_update.emit(health)
 	
 func die():
 	queue_free()
+	
+func takeDamage(damage:int):
+	health -= damage
+	health_update.emit(health)
+	if health <= 0:
+		die()
 	
 func _process(delta):
 	activeSpell.target = get_global_mouse_position()
@@ -32,6 +36,7 @@ func _process(delta):
 		activeSpell.use()
 
 func _physics_process(delta):
+	
 	
 	#Get direction
 	var direction = Vector2(
@@ -45,7 +50,5 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 	else:
 		velocity = direction * moveSpeed
-		
-
 
 	move_and_slide()

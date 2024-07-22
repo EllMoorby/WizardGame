@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://div1q0qxac6ye"]
+
+[ext_resource type="Texture2D" uid="uid://cl4muql3axmr7" path="res://Assets/tilemap.png" id="1_7hctb"]
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_bxaho"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uokun"]
+radius = 9.0
+height = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_atvcg"]
+atlas = ExtResource("1_7hctb")
+region = Rect2(17, 170, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n3b52"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atvcg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Area2D" groups=["Enemy"]]
+script = ExtResource("1_bxaho")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_uokun")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -3)
+sprite_frames = SubResource("SpriteFrames_n3b52")
+
+[node name="Health" type="Label" parent="."]
+offset_left = -25.0
+offset_top = -31.0
+offset_right = 25.0
+offset_bottom = -8.0
+text = "0"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

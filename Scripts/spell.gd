@@ -16,6 +16,7 @@ static func createSpell(s_name,s_damage, s_damageType, s_shapeType, s_radius, s_
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	print(attributes.name, attributes.damageType, attributes.shapeType)
 	if attributes.shapeType == SPELL_ATTRIBUTES.SHAPE_TYPE.SQUARE:
 		shape = SquareSpell.new(self, attributes.radius)
@@ -30,7 +31,7 @@ func _ready():
 	elif attributes.shapeType == SPELL_ATTRIBUTES.DAMAGE_TYPE.WATER:
 		damageType = Damage_Type_Water.new(attributes.damage)
 		
-	
+
 	
 	
 func use():
@@ -47,3 +48,5 @@ func _process(delta):
 	if currentCooldown > 0:
 		currentCooldown -= delta
 	pass
+	self.target = get_global_mouse_position()
+	shape.setTarget(target)
