@@ -17,7 +17,7 @@ func onUse():
 	pass
 	
 func onHit(body:Node2D):
-	pass
+	parent.onHit(body)
 	
 func _process(delta):
 	pass

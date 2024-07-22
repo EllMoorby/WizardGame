@@ -18,8 +18,6 @@ func onUse():
 		if area.is_in_group("Enemy"):
 			onHit(area)
 			
-func onHit(body:Node2D):
-	body.takeDamage(parent.attributes.damage)
 	
 func setTarget(target:Vector2):
 	collisionShape.global_position = target

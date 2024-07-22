@@ -31,12 +31,12 @@ func _ready():
 	elif attributes.shapeType == SPELL_ATTRIBUTES.DAMAGE_TYPE.WATER:
 		damageType = Damage_Type_Water.new(attributes.damage)
 		
-
-	
-	
 func use():
 	currentCooldown = attributes.cooldown
 	shape.onUse()
+	
+func onHit(body:Node2D):
+	damageType.onHit(body)
 	
 func isOnCooldown():
 	if currentCooldown > 0:

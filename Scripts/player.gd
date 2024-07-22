@@ -15,7 +15,7 @@ const offset = 100.0
 signal health_update(health)
 
 func _ready():
-	activeSpell = Spell.createSpell("TestSpell", 10,SPELL_ATTRIBUTES.DAMAGE_TYPE.FIRE, 
+	activeSpell = Spell.createSpell("TestSpell", 10,SPELL_ATTRIBUTES.DAMAGE_TYPE.WATER, 
 	SPELL_ATTRIBUTES.SHAPE_TYPE.CIRCLE, 20,SPELL_ATTRIBUTES.SHAPE_ACTIVATION.INSTANT,[[SPELL_ATTRIBUTES.MODIFIER_TYPE.DAMAGE,5],[SPELL_ATTRIBUTES.MODIFIER_TYPE.RADIUS,10]],1)
 	add_child(activeSpell)
 	health_update.emit(health)
