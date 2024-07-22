@@ -9,9 +9,9 @@ var target = Vector2.ZERO
 
 var currentCooldown:float = 0
 
-static func createSpell(s_name,s_damage, s_damageType, s_shapeType, s_radius, s_shapeActivation, s_cooldown = 0, s_manaCost = 0):
+static func createSpell(s_name,s_damage, s_damageType, s_shapeType, s_radius, s_shapeActivation,s_modifiers = [], s_cooldown = 0,):
 	var newSpell = spellBase.instantiate()
-	newSpell.attributes = SpellResource.new(s_name,s_damage, s_damageType, s_shapeType, s_radius, s_shapeActivation, s_cooldown, s_manaCost)
+	newSpell.attributes = SpellResource.new(s_name,s_damage, s_damageType, s_shapeType, s_radius, s_shapeActivation,s_modifiers, s_cooldown)
 	return newSpell
 	
 # Called when the node enters the scene tree for the first time.
