@@ -2,7 +2,7 @@ extends Area2D
 class_name BoltProjectile
 var speed:int = 200
 var dirVector:Vector2
-var maxDistance:int = 100
+var maxDistance:int
 var currentDistanceVector:Vector2
 var startPos:Vector2
 var shapeRef:BoltSpell
@@ -12,6 +12,7 @@ const projectile = preload("res://Scenes/Bolt.tscn")
 static func fire(start:Vector2, dir:Vector2, p_shapeRef:BoltSpell):
 	var activeProjectile = projectile.instantiate()
 	activeProjectile.shapeRef = p_shapeRef
+	activeProjectile.maxDistance = p_shapeRef.parent.attributes.range
 	activeProjectile.startPos = start
 	activeProjectile.rotation = (start-dir).angle() 
 	activeProjectile.dirVector = (dir - start).normalized()

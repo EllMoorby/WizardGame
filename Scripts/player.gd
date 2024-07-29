@@ -2,23 +2,29 @@ extends CharacterBody2D
 class_name Player
 
 @export_group("Base Stats")
-@export var maxHealth = 1000
+@export var maxHealth:int = 1000
+@export var maxMana:int = 100
 @export var moveSpeed:float = 300.0
 var health = maxHealth
+var mana = maxMana
 
 var activeSpell:Spell
 
 @export_group("Other")
+@export var manaRegenPS:int = 5
 
-const offset = 100.0
+var perSecondCounter:float = 0
 
 signal health_update(health)
+signal mana_update(mana)
 
 func _ready():
-	activeSpell = Spell.createSpell("TestSpell", 10,SPELL_ATTRIBUTES.DAMAGE_TYPE.WATER, 
-	SPELL_ATTRIBUTES.SHAPE_TYPE.CIRCLE, 20,SPELL_ATTRIBUTES.SHAPE_ACTIVATION.INSTANT,[[SPELL_ATTRIBUTES.MODIFIER_TYPE.DAMAGE,5],[SPELL_ATTRIBUTES.MODIFIER_TYPE.RADIUS,10]],1)
+	var spellR = SpellResource.new("TestSpell", 10,SPELL_ATTRIBUTES.DAMAGE_TYPE.WATER, 
+	SPELL_ATTRIBUTES.SHAPE_TYPE.BOLT, 20,SPELL_ATTRIBUTES.SHAPE_ACTIVATION.INSTANT, 100, [[SPELL_ATTRIBUTES.MODIFIER_TYPE.DAMAGE,5],[SPELL_ATTRIBUTES.MODIFIER_TYPE.RADIUS,10]],1)
+	activeSpell = Spell.createSpell(spellR)
 	add_child(activeSpell)
 	health_update.emit(health)
+	mana_update.emit(mana)
 	
 func die():
 	queue_free()
@@ -29,11 +35,24 @@ func takeDamage(damage:int):
 	if health <= 0:
 		die()
 	
+func calculatePerSecondStats():
+	mana = min(mana+manaRegenPS,maxMana)
+	mana_update.emit(mana)
+
 func _process(delta):
+	perSecondCounter += delta
+	if perSecondCounter >= 1:
+		calculatePerSecondStats()
+		perSecondCounter = 0
+	
 	activeSpell.target = get_global_mouse_position()
 	
 	if Input.is_key_pressed(KEY_SPACE) and activeSpell.isOnCooldown() == false:
-		activeSpell.use()
+		if activeSpell.getManaCost() <= mana:
+			activeSpell.use()
+			mana -= activeSpell.getManaCost()
+		
+	
 
 func _physics_process(delta):
 	

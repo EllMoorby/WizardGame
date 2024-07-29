@@ -20,3 +20,4 @@ position = Vector2(93, -30)
 moveSpeed = 150.0
 
 [connection signal="health_update" from="Player" to="DebugHUD" method="_on_player_health_update"]
+[connection signal="mana_update" from="Player" to="DebugHUD" method="_on_player_mana_update"]

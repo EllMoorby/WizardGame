@@ -9,9 +9,9 @@ var target = Vector2.ZERO
 
 var currentCooldown:float = 0
 
-static func createSpell(s_name,s_damage, s_damageType, s_shapeType, s_radius, s_shapeActivation,s_modifiers = [], s_cooldown = 0,):
+static func createSpell(spellResource):
 	var newSpell = spellBase.instantiate()
-	newSpell.attributes = SpellResource.new(s_name,s_damage, s_damageType, s_shapeType, s_radius, s_shapeActivation,s_modifiers, s_cooldown)
+	newSpell.attributes = spellResource
 	return newSpell
 	
 # Called when the node enters the scene tree for the first time.
@@ -28,7 +28,7 @@ func _ready():
 		
 	if attributes.damageType == SPELL_ATTRIBUTES.DAMAGE_TYPE.FIRE:
 		damageType = Damage_Type_Fire.new(attributes.damage)
-	elif attributes.shapeType == SPELL_ATTRIBUTES.DAMAGE_TYPE.WATER:
+	elif attributes.damageType == SPELL_ATTRIBUTES.DAMAGE_TYPE.WATER:
 		damageType = Damage_Type_Water.new(attributes.damage)
 		
 func use():
@@ -38,7 +38,7 @@ func use():
 func onHit(body:Node2D):
 	damageType.onHit(body)
 	
-func isOnCooldown():
+func isOnCooldown() -> bool:
 	if currentCooldown > 0:
 		return true
 	return false
@@ -47,6 +47,10 @@ func isOnCooldown():
 func _process(delta):
 	if currentCooldown > 0:
 		currentCooldown -= delta
-	pass
-	self.target = get_global_mouse_position()
+	print(self.global_position," ",get_global_mouse_position())
+	self.target = ((get_global_mouse_position() - self.global_position).limit_length(attributes.range)) + self.global_position
 	shape.setTarget(target)
+	
+	
+func getManaCost() -> int:
+	return attributes.manaCost
